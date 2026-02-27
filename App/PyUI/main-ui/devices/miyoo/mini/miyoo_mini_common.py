@@ -380,7 +380,7 @@ class MiyooMiniCommon(MiyooDevice):
     def get_volume(self):
         try:
             return self.mainui_volume * 5
-        except:
+        except (TypeError, AttributeError):
             return 0
 
     def volume_up(self):

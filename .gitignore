@@ -1,10 +1,27 @@
+# macOS
 .DS_Store
 ._*
+
+# IDEs
 .vscode
-*.pyc
 .idea
+
+# Python
+*.pyc
+__pycache__/
+*.pyo
+
+# Environment / secrets
+.env
+.env.*
+
+# Temporary / local files
 current.txt
 sync.bat
 tsp
 tsps
 flip
+*.tmp
+*.log
+*.swp
+*~

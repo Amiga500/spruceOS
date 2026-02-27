@@ -19,7 +19,7 @@
 # Source the helper functions
 . /mnt/SDCARD/spruce/scripts/helperFunctions.sh
 
-while [ 1 ]; do
+while true; do
 
     stop_pyui_message_writer
     enable_or_disable_rgb

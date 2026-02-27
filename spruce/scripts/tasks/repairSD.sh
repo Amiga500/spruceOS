@@ -258,8 +258,8 @@ if [ "$1" = "run" ]; then
         cp "$EXPERT_ICON" /tmp/sdfix/ && echo "copied expertappswitch.png to /tmp/sdfix/"
         cp "$FONT" /tmp/sdfix/ && echo "copied nunwen.ttf to /tmp/sdfix/"
         cp "$BG_IMAGE" "/tmp/sdfix/bg.png" && echo "copied background image to /tmp/sdfix/"
-        chmod 777 /tmp/sdfix/display_text.elf
-        chmod 777 /tmp/sdfix/fsck.fat
+        chmod 755 /tmp/sdfix/display_text.elf
+        chmod 755 /tmp/sdfix/fsck.fat
 
         tmp_display "Attempting to repair SD card. This may take some time."
 

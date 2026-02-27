@@ -73,7 +73,7 @@ class SettingsMenu(ABC):
     def change_indexed_array_option_for_menu_options_list(self, category, entry_name, input, all_options, current_value, update_value):
         try:
             selected_index = all_options.index(current_value)
-        except:
+        except ValueError:
             selected_index = 0
             PyUiLogger.get_logger().error(f"{current_value} not found in options for {entry_name}")
 

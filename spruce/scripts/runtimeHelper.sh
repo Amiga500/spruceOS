@@ -17,7 +17,7 @@ run_sd_card_fix_if_triggered() {
         log_message "Running repairSD.sh..."
         mkdir -p /tmp/sdfix
         cp /mnt/SDCARD/spruce/scripts/tasks/repairSD.sh /tmp/sdfix/
-        chmod 777 /tmp/sdfix/repairSD.sh
+        chmod 755 /tmp/sdfix/repairSD.sh
         /tmp/sdfix/repairSD.sh run
     fi
 }

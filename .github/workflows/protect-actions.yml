@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check for changes in .github/ folder
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Verify .github/ folder changes
         run: |
           if [ "${{ github.actor_is_admin }}" = "true" ]; then

@@ -179,7 +179,7 @@ def check_for_msg_display_realtime(args):
                     
         except Exception as e:
             PyUiLogger.get_logger().error("Error processing messages: ", exc_info=True)
-        PyUiLogger.get_logger().info(f"Exitting...")
+        PyUiLogger.get_logger().info(f"Exiting...")
         sys.exit(0)
 
 def check_for_msg_display_socket_based(args):

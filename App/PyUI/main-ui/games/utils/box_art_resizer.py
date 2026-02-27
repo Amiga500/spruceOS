@@ -60,7 +60,7 @@ class BoxArtResizer():
                     Device.get_device().get_image_utils().convert_from_png_to_qoi(full_path)
                     qoi_full_path = os.path.splitext(full_path)[0] + ".qoi"
                 except Exception as e:
-                    PyUiLogger().get_logger().warning(
+                    PyUiLogger.get_logger().warning(
                         f"Unable to convert {full_path} : {e}")
                     return False
 
@@ -238,7 +238,7 @@ class BoxArtResizer():
                 cls._to_delete.append(resize_png_path)
                 return needed_shrink
             except Exception as e:
-                PyUiLogger().get_logger().warning(
+                PyUiLogger.get_logger().warning(
                     f"Unable to convert {resize_png_path} : {e}")
 
         return needed_shrink

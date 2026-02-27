@@ -116,7 +116,7 @@ class Controller:
 
         if(Controller._watch_for_secret_code and last_input is not None):
             if(Controller._matches_secret_prefix() and Controller.last_controller_input == ControllerInput.A):
-                PyUiLogger().get_logger().info(f"Prefix matched so blocking A press")
+                PyUiLogger.get_logger().info(f"Prefix matched so blocking A press")
                 Controller.last_controller_input = None
                 return
 
@@ -130,14 +130,14 @@ class Controller:
 
             # Check for match
             if Controller._input_history == Controller._SECRET_CODE:
-                PyUiLogger().get_logger().info(f"Secret code entered")
+                PyUiLogger.get_logger().info(f"Secret code entered")
                 Device.get_device().get_system_config().set_game_selection_only_mode_enabled(False)
                 Device.get_device().get_system_config().set_simple_mode_enabled(False)
                 Device.get_device().exit_pyui()
 
 
             if(Controller._matches_secret_prefix()):
-                PyUiLogger().get_logger().info(f"Prefix matched so blocking A press")
+                PyUiLogger.get_logger().info(f"Prefix matched so blocking A press")
                 Controller.last_controller_input = None
 
 

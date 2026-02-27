@@ -43,7 +43,7 @@ class DeviceCommon(AbstractDevice):
             if(Controller.get_input()):
                 if(Controller.last_input() == ControllerInput.A):
                     self.power_off()
-                elif(Controller.last_input() == ControllerInput.X and self.reboot_cmd is not None):
+                elif(Controller.last_input() == ControllerInput.X and self.reboot_cmd() is not None):
                     self.reboot()
                 elif(Controller.last_input() == ControllerInput.B):
                     return
@@ -508,7 +508,7 @@ class DeviceCommon(AbstractDevice):
                 check=True
             )
         except Exception as e:
-            PyUiLogger.get_logger.error(f"Failed to run hwclock: {e}")
+            PyUiLogger.get_logger().error(f"Failed to run hwclock: {e}")
 
     def animation_divisor(self):
         return self.get_system_config().animation_speed(1)

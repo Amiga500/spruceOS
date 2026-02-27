@@ -81,10 +81,10 @@ class GKDDevice(DeviceCommon):
         match = re.search(r'(\d?\d+?)%', result.stdout)
         if match:
             volume = int(match.group(1))
-            PyUiLogger().get_logger().info(f"Volume is {volume}")
+            PyUiLogger.get_logger().info(f"Volume is {volume}")
             return volume
         else:
-            PyUiLogger().get_logger().error("Unable to find volume from pactl command")
+            PyUiLogger.get_logger().error("Unable to find volume from pactl command")
             return 0
         
     def fix_sleep_sound_bug(self):

@@ -29,9 +29,9 @@ class ThemePatcher():
     @classmethod
     def convert_to_qoi(cls, path):
         from display.display import Display
-        PyUiLogger().get_logger().info(f"Checking if theme is patched")
+        PyUiLogger.get_logger().info(f"Checking if theme is patched")
         if(cls.contains_qoi(path)):
-            PyUiLogger().get_logger().info(f"Theme was patched")
+            PyUiLogger.get_logger().info(f"Theme was patched")
             return False
 
         Display.clear("Patching Theme")
@@ -43,7 +43,7 @@ class ThemePatcher():
                         full_path = os.path.join(dirpath, filename)
                         cls.convert_png_to_qoi(full_path)      
                     except Exception as e:
-                        PyUiLogger().get_logger().warning(f"Unable to convert {full_path} : {e}")
+                        PyUiLogger.get_logger().warning(f"Unable to convert {full_path} : {e}")
 
         return True   
        
@@ -89,7 +89,7 @@ class ThemePatcher():
                 cls.scale_theme(path, theme_width, theme_height, target_width, target_height)
             return True
         except Exception as e:
-            PyUiLogger().get_logger().exception(f"Failed to process {path}: {e}")
+            PyUiLogger.get_logger().exception(f"Failed to process {path}: {e}")
             return False
 
     @classmethod
@@ -110,12 +110,12 @@ class ThemePatcher():
 
         aspect_ratio_reset = abs(scale_width - scale_height) > 1e-6
 
-        PyUiLogger().get_logger().info(f"Patching theme {config_path} from {theme_width}x{theme_height} to {target_width}x{target_height} w/ a scale factor of {scale}")
+        PyUiLogger.get_logger().info(f"Patching theme {config_path} from {theme_width}x{theme_height} to {target_width}x{target_height} w/ a scale factor of {scale}")
 
         Display.clear("Theme Patch")
         Display.display_message_multiline([
             f"Theme is missing correctly sized assets so patching",
-            f"Scale factor is {scale}"
+            f"Scale factor is {scale}",
             f"Patching main assets"
         ])
         Display.present()
@@ -128,7 +128,7 @@ class ThemePatcher():
         Display.clear("Theme Patch")
         Display.display_message_multiline([
             f"Theme is missing correctly sized assets so patching",
-            f"Scale factor is {scale}"
+            f"Scale factor is {scale}",
             f"Patching icons"
         ])
         Display.present()
@@ -149,7 +149,7 @@ class ThemePatcher():
     @classmethod
     def patch_folder(cls, input_folder, output_folder, scale, theme_width, theme_height, target_width, target_height):
         from display.display import Display
-        PyUiLogger().get_logger().info(f"Patching theme [{input_folder}] to [{input_folder}] with scale factor [{scale}]")
+        PyUiLogger.get_logger().info(f"Patching theme [{input_folder}] to [{output_folder}] with scale factor [{scale}]")
         # Ensure the output directory exists
         os.makedirs(output_folder, exist_ok=True)
 
@@ -174,7 +174,7 @@ class ThemePatcher():
     @staticmethod
     def scale_image(input_file, output_file, scale, theme_width, theme_height, target_width, target_height):
         if os.path.exists(output_file):
-            PyUiLogger().get_logger().info(f"Scaled version of {output_file} already exists, skipping scaling.")
+            PyUiLogger.get_logger().info(f"Scaled version of {output_file} already exists, skipping scaling.")
         else:
             image_utils = Device.get_device().get_image_utils()
             try:
@@ -202,9 +202,9 @@ class ThemePatcher():
                 # Copy the file instead of scaling if something fails
                 try:
                     shutil.copyfile(input_file, output_file)
-                    PyUiLogger().get_logger().warning(f"Scaling failed for {input_file}, copied original instead: {e}")
+                    PyUiLogger.get_logger().warning(f"Scaling failed for {input_file}, copied original instead: {e}")
                 except Exception as copy_err:
-                    PyUiLogger().get_logger().exception(f"Failed to copy {input_file} to {output_file}: {copy_err}")    
+                    PyUiLogger.get_logger().exception(f"Failed to copy {input_file} to {output_file}: {copy_err}")    
                         
     @classmethod
     def scale_config_json(cls, config_path, output_config_path, scale, width_multiplier, height_multiplier, aspect_ratio_reset):
@@ -220,7 +220,7 @@ class ThemePatcher():
 
             PyUiLogger.get_logger().info(f"Scaled config written to: {output_config_path}")
         except Exception as e:
-            PyUiLogger().get_logger().exception(f"Failed to process JSON config {config_path}: {e}")    
+            PyUiLogger.get_logger().exception(f"Failed to process JSON config {config_path}: {e}")    
 
     @classmethod
     def _scale_json_values(cls, obj, scale, width_multiplier, height_multiplier, aspect_ratio_reset):

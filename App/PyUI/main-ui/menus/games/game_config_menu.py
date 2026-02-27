@@ -61,7 +61,7 @@ class GameConfigMenu:
     def change_indexed_array_option(self, entry_name, input, rom_file_path, contains_override, all_options, current_value, update_value, update_override, remove_override):
         try:
             selected_index = all_options.index(current_value)
-        except:
+        except ValueError:
             selected_index = 0
             PyUiLogger.get_logger().error(f"{current_value} not found in options for {entry_name}")
 

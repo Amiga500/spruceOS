@@ -141,7 +141,7 @@ class TrimUISmartProS(TrimUIDevice):
     def get_volume(self):
         try:
             return self.mainui_volume * 5
-        except:
+        except (TypeError, AttributeError):
             return 0
         
     def on_mainui_config_change(self):

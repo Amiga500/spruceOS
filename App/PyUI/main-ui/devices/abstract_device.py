@@ -55,10 +55,6 @@ class AbstractDevice(ABC):
     @abstractmethod
     def get_wifi_status(self):
         pass
-    
-    @abstractmethod
-    def get_wifi_status(self):
-        pass
 
     @abstractmethod
     def is_wifi_enabled(self):
@@ -228,23 +224,18 @@ class AbstractDevice(ABC):
     def get_ip_addr_text(self):
         pass
     
-    @staticmethod  
     def launch_stock_os_menu(self):
         pass
     
-    @staticmethod  
     def supports_analog_calibration(self):
         pass
         
-    @staticmethod  
     def supports_image_resizing(self):
         pass
 
-    @staticmethod  
     def calibrate_sticks(self):
         pass
     
-    @staticmethod  
     def get_state_path(self):
         pass
 

@@ -98,10 +98,10 @@ class TrimUIDevice(DeviceCommon):
         match = re.search(r'values=(\d+),\d+', result.stdout)
         if match:
             volume = int(match.group(1))
-            PyUiLogger().get_logger().info(f"Volume is {volume}")
+            PyUiLogger.get_logger().info(f"Volume is {volume}")
             return math.ceil(volume * 100/255)
         else:
-            PyUiLogger().get_logger().error("Unable to find volume from amixer command")
+            PyUiLogger.get_logger().error("Unable to find volume from amixer command")
             return 0
         
     def fix_sleep_sound_bug(self):

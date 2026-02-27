@@ -24,11 +24,19 @@ class KeyWatcher:
         self.event_path = event_path
         self.held_keys = {}  # Maps keycode -> last seen time
         self.repeat_interval = 0.2  # seconds
+        self.fd = None
         try:
             self.fd = os.open(self.event_path, os.O_RDONLY | os.O_NONBLOCK)
         except OSError as e:
             PyUiLogger.get_logger().warning(f"Unable to open {self.event_path}: {e}")
-            return (None, None)
+
+    def close(self):
+        if self.fd is not None:
+            try:
+                os.close(self.fd)
+            except OSError:
+                pass
+            self.fd = None
 
     def read_keyboard_input(self, timeout=1.0):
         """
@@ -37,8 +45,10 @@ class KeyWatcher:
         Returns:
             tuple: (keycode, is_down)
         """
-        now = time.time()
+        if self.fd is None:
+            return (None, None)
 
+        now = time.time()
 
         try:
             rlist, _, _ = select.select([self.fd], [], [], timeout)

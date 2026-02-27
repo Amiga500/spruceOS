@@ -160,7 +160,7 @@ class RealtimeMessageNetworkListener:
                     self.logger.error("RENDER_IMAGE missing args")
 
             elif cmd == "IMAGE_AND_TEXT":
-                if args:
+                if len(args) >= 5:
                     padding = Display.get_top_bar_height()
 
                     image_path = args[0]
@@ -197,13 +197,12 @@ class RealtimeMessageNetworkListener:
 
                     Display.present()
                 else:
-                    self.logger.error("TOP_IMAGE_BOTTOM_TEXT missing args")
+                    self.logger.error("IMAGE_AND_TEXT requires at least 5 args")
             elif cmd == "TEXT_WITH_PERCENTAGE_BAR":
-                if args:
+                if len(args) >= 2:
                     text = args[0]
-                    args[1] = int(args[1]) 
-                    percentage = args[1]
-                    self.logger.info(f"Rendering text: {text} w/ perc(entage bar: {percentage}%")
+                    percentage = int(args[1])
+                    self.logger.info(f"Rendering text: {text} w/ percentage bar: {percentage}%")
                     Display.clear("")
                     Display.write_message_multiline(Display.split_message(text, FontPurpose.LIST,clip_to_device_width=True), Device.get_device().screen_height()*0.35)
                     Display.write_message_multiline([self._progress_bar(percentage)], (Device.get_device().screen_height()*0.6))                    
@@ -211,7 +210,7 @@ class RealtimeMessageNetworkListener:
                         Display.write_message_multiline(Display.split_message(args[2], FontPurpose.LIST,clip_to_device_width=True), Device.get_device().screen_height()*0.7)
                     Display.present()
                 else:
-                    self.logger.error("TEXT_WITH_PERCENTAGE_BAR missing args")
+                    self.logger.error("TEXT_WITH_PERCENTAGE_BAR requires at least 2 args")
 
             elif cmd == "OPTION_LIST":
                 if args:

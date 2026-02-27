@@ -1,6 +1,7 @@
 
 import math
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -19,7 +20,7 @@ class FfmpegImageUtils(ImageUtils):
                 output_path
             ], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         except subprocess.CalledProcessError as e:
-            PyUiLogger().get_logger().error(f"Error converting {input_path} to {output_path}: {e}")
+            PyUiLogger.get_logger().error(f"Error converting {input_path} to {output_path}: {e}")
 
     def convert_from_jpg_to_qoi(self,jpg_path, qoi_path):
        self.convert_type(jpg_path,qoi_path)
@@ -43,7 +44,6 @@ class FfmpegImageUtils(ImageUtils):
             output = result.stderr + result.stdout
 
             # Find pattern like "1920x1080"
-            import re
             match = re.search(r'(\d{2,5})x(\d{2,5})', output)
             if match:
                 width, height = map(int, match.groups())
@@ -76,16 +76,16 @@ class FfmpegImageUtils(ImageUtils):
 
                 # Replace original file
                 shutil.move(temp_path, output_path)
-                PyUiLogger().get_logger().info(f"Scaled: {input_path} → {output_path} to {max_width}x{max_height}")
+                PyUiLogger.get_logger().info(f"Scaled: {input_path} → {output_path} to {max_width}x{max_height}")
             except subprocess.CalledProcessError as e:
-                PyUiLogger().get_logger().error(f"Error resizing {input_path}: {e}")
+                PyUiLogger.get_logger().error(f"Error resizing {input_path}: {e}")
                 # Clean up temp file if it exists
                 if os.path.exists(temp_path):
                     os.remove(temp_path)
             
             return True
         else:
-            PyUiLogger().get_logger().info(
+            PyUiLogger.get_logger().info(
                 f"Skipping as already small enough: {input_path} → {output_path} ({actual_width}x{actual_height})"
             )
             return False
@@ -99,7 +99,7 @@ class FfmpegImageUtils(ImageUtils):
         try:
             actual_width, actual_height = self.get_image_dimensions(input_path)
             if actual_width == 0 or actual_height == 0:
-                PyUiLogger().get_logger().warning(f"Can't determine dimensions for {input_path}; skipping resize.")
+                PyUiLogger.get_logger().warning(f"Can't determine dimensions for {input_path}; skipping resize.")
                 return
 
             if(preserve_aspect_ratio):
@@ -120,9 +120,9 @@ class FfmpegImageUtils(ImageUtils):
                 # If output_path differs from input_path, copy; otherwise nothing to do
                 if os.path.abspath(input_path) != os.path.abspath(output_path):
                     shutil.copy2(input_path, output_path)
-                    PyUiLogger().get_logger().info(f"Copied without scaling: {input_path} → {output_path} ({new_width}x{new_height})")
+                    PyUiLogger.get_logger().info(f"Copied without scaling: {input_path} → {output_path} ({new_width}x{new_height})")
                 else:
-                    PyUiLogger().get_logger().info(f"No resizing needed for {input_path} ({new_width}x{new_height})")
+                    PyUiLogger.get_logger().info(f"No resizing needed for {input_path} ({new_width}x{new_height})")
                 return
 
             # Use a temp file to avoid "cannot overwrite input" problems
@@ -150,10 +150,10 @@ class FfmpegImageUtils(ImageUtils):
 
             # Move temp file to final destination (atomic on same filesystem)
             shutil.move(tmp_output, output_path)
-            PyUiLogger().get_logger().info(f"Resized: {input_path} → {output_path} -> {new_width}x{new_height}")
+            PyUiLogger.get_logger().info(f"Resized: {input_path} → {output_path} -> {new_width}x{new_height}")
 
         except subprocess.CalledProcessError as e:
-            PyUiLogger().get_logger().error(f"Error resizing {input_path}: {e}")
+            PyUiLogger.get_logger().error(f"Error resizing {input_path}: {e}")
             # cleanup temp file if present
             try:
                 if os.path.exists(tmp_output):
@@ -161,7 +161,7 @@ class FfmpegImageUtils(ImageUtils):
             except Exception:
                 pass
         except Exception as e:
-            PyUiLogger().get_logger().error(f"Unexpected error resizing {input_path}: {e}")
+            PyUiLogger.get_logger().error(f"Unexpected error resizing {input_path}: {e}")
             try:
                 if os.path.exists(tmp_output):
                     os.remove(tmp_output)
@@ -189,7 +189,6 @@ class FfmpegImageUtils(ImageUtils):
             stderr = result.stderr
 
             # ffmpeg prints something like: Stream #0:0: Video: png, 800x600, ...
-            import re
             m = re.search(r"Video:.* (\d+)x(\d+)", stderr)
             if m:
                 width = int(m.group(1))
@@ -197,7 +196,7 @@ class FfmpegImageUtils(ImageUtils):
                 return width, height
             return 0, 0
         except Exception as e:
-            PyUiLogger().get_logger().info(f"Error getting dimens of {path} : {e}")
+            PyUiLogger.get_logger().info(f"Error getting dimens of {path} : {e}")
             return 0, 0
 
     def convert_from_png_to_qoi(self, png_path, qoi_path=None):
@@ -206,11 +205,11 @@ class FfmpegImageUtils(ImageUtils):
         The QOI will be in the same directory with the same basename.
         """
         if png_path.lower().endswith(".qoi"):
-            PyUiLogger().get_logger().info(f"{png_path} is already a qoi")
+            PyUiLogger.get_logger().info(f"{png_path} is already a qoi")
             return
         if not png_path.lower().endswith(".png"):
-            PyUiLogger().get_logger().warning(f"{png_path} is not a png")
-        PyUiLogger().get_logger().info(f"Converting {png_path} to qoi")
+            PyUiLogger.get_logger().warning(f"{png_path} is not a png")
+        PyUiLogger.get_logger().info(f"Converting {png_path} to qoi")
 
         if(qoi_path is None):
             qoi_path = os.path.splitext(png_path)[0] + ".qoi"
@@ -225,6 +224,6 @@ class FfmpegImageUtils(ImageUtils):
             qoi_path               # output file
         ], check=True)
 
-        PyUiLogger().get_logger().info(f"Converted {png_path} ==> {qoi_path}")
+        PyUiLogger.get_logger().info(f"Converted {png_path} ==> {qoi_path}")
 
         return qoi_path

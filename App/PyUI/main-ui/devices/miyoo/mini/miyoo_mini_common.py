@@ -1,7 +1,6 @@
 import re
 import tempfile
 import time
-from asyncio import sleep
 import json
 from pathlib import Path
 import subprocess
@@ -412,7 +411,7 @@ class MiyooMiniCommon(MiyooDevice):
             self.volume_up()
         else:
             self.volume_down()
-        sleep(0.1)
+        time.sleep(0.1)
         self.on_mainui_config_change()
 
     def _set_volume(self, volume: int) -> int:

@@ -24,7 +24,6 @@ from utils.config_copier import ConfigCopier
 from utils.ffmpeg_image_utils import FfmpegImageUtils
 from utils.logger import PyUiLogger
 from utils.py_ui_config import PyUiConfig
-from asyncio import sleep
 
 class TrimUISmartProS(TrimUIDevice):
     TRIMUI_STOCK_CONFIG_LOCATION = "/mnt/UDISK/system.json"
@@ -223,7 +222,7 @@ class TrimUISmartProS(TrimUIDevice):
             self.volume_up()
         else:
             self.volume_down()
-        sleep(0.1)
+        time.sleep(0.1)
         self.on_mainui_config_change()
 
     def enable_bluetooth(self):

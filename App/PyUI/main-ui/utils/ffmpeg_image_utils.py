@@ -1,6 +1,7 @@
 
 import math
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -43,7 +44,6 @@ class FfmpegImageUtils(ImageUtils):
             output = result.stderr + result.stdout
 
             # Find pattern like "1920x1080"
-            import re
             match = re.search(r'(\d{2,5})x(\d{2,5})', output)
             if match:
                 width, height = map(int, match.groups())
@@ -189,7 +189,6 @@ class FfmpegImageUtils(ImageUtils):
             stderr = result.stderr
 
             # ffmpeg prints something like: Stream #0:0: Video: png, 800x600, ...
-            import re
             m = re.search(r"Video:.* (\d+)x(\d+)", stderr)
             if m:
                 width = int(m.group(1))

@@ -2,6 +2,8 @@
 ._*
 .vscode
 *.pyc
+__pycache__/
+.pytest_cache/
 .idea
 current.txt
 sync.bat

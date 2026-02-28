@@ -1,4 +1,8 @@
-"""Tests for utils.etension_preserving_rotating_file_handler.ExtensionPreservingRotatingFileHandler."""
+"""Tests for ExtensionPreservingRotatingFileHandler.
+
+Note: the source module is named ``etension_preserving_rotating_file_handler``
+(typo in the original codebase).
+"""
 
 import logging
 import os
